@@ -1,12 +1,12 @@
 const jwt = require('jsonwebtoken');
+const uuid = require('uuid/v1')
 
-const jwtKey =
-  process.env.JWT_SECRET ||
+const jwtKey = process.env.JWT_SECRET ||
   'add a .env file to root of project with the JWT_SECRET variable';
 
 // quickly see what this file exports
 module.exports = {
-  authenticate,
+  authenticate, setToken
 };
 
 // implementation details
@@ -27,3 +27,14 @@ function authenticate(req, res, next) {
     });
   }
 }
+
+function setToken (user){
+  const payload = {
+    username: user.username
+  };
+  const options = {
+    expiresIn: '1h',
+    jwtid: uuid()
+  };
+  return jwt.sign(payload,jwtKey,options)
+};
