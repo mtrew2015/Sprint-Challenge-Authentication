@@ -1,7 +1,6 @@
 const axios = require('axios');
 const db = require('../database/dbConfig.js');
 const bcrypt = require('bcryptjs');
-
 const { authenticate, setToken } = require('../auth/authenticate');
 
 module.exports = server => {
@@ -21,8 +20,7 @@ function register(req, res) {
         const token = (setToken(user));
         res.status(200).json({ id: user.id, token })
       });
-    })
-    .catch(err => {
+    }).catch(err => {
       res.status(500).json({ message: err });
     });
 };
